@@ -10,7 +10,6 @@ namespace ariel{
 class Graph {
 public:
     void loadGraph(const std::vector<std::vector<int>>& adjacencyMatrix);
-    //void printGraph() const;
     std::string printGraph() const;
     std::vector<std::vector<int>> matrix;
     
