@@ -47,6 +47,8 @@ std::string Graph::printGraph() const {
 //     }
 //     std::cout << edges << " edges." << std::endl;
 // }
+
+// G = G + G
 Graph Graph::operator+(const Graph& other) const {
     if (matrix.size() != other.matrix.size()) {
         throw std::invalid_argument("Graphs must be of the same size for addition.");
@@ -60,10 +62,12 @@ Graph Graph::operator+(const Graph& other) const {
     return result;
 }
 
+// G+/+G
 Graph Graph::operator+() const {
     return *this;
 }
 
+// G += G
 Graph& Graph::operator+=(const Graph& other) {
     if (matrix.size() != other.matrix.size()) {
         throw std::invalid_argument("Graphs must be of the same size for addition.");
@@ -76,6 +80,7 @@ Graph& Graph::operator+=(const Graph& other) {
     return *this;
 }
 
+// G-/-G
 Graph Graph::operator-() const {
     Graph result = *this;
     for (size_t i = 0; i < matrix.size(); ++i) {
@@ -86,6 +91,7 @@ Graph Graph::operator-() const {
     return result;
 }
 
+// G = G - G
 Graph Graph::operator-(const Graph& other) const {
     if (matrix.size() != other.matrix.size()) {
         throw std::invalid_argument("Graphs must be of the same size for subtraction.");
@@ -99,6 +105,7 @@ Graph Graph::operator-(const Graph& other) const {
     return result;
 }
 
+// G -= G
 Graph& Graph::operator-=(const Graph& other) {
     if (matrix.size() != other.matrix.size()) {
         throw std::invalid_argument("Graphs must be of the same size for subtraction.");
@@ -111,19 +118,23 @@ Graph& Graph::operator-=(const Graph& other) {
     return *this;
 }
 
+// (G == G)
 bool Graph::operator==(const Graph& other) const {
     return matrix == other.matrix;
 }
 
+// (G != G)
 bool Graph::operator!=(const Graph& other) const {
     return !(*this == other);
 }
 
+// G < G
 bool Graph::operator<(const Graph& other) const {
     if(*this == other){
         return false;
     }
-
+    //we get a temp G = G(<_) and sub each mat[i][j] with mat[i][j] of the left G(_<)
+    //if any of them is negative them graph G(<_) doesnt contain G(_<)
     Graph temp = other;
     bool isContained = true;
 
@@ -154,18 +165,22 @@ bool Graph::operator<(const Graph& other) const {
     return matrix < other.matrix;
 }
 
+// G <= G
 bool Graph::operator<=(const Graph& other) const {
     return *this < other || *this == other;
 }
 
+// G > G
 bool Graph::operator>(const Graph& other) const {
     return !(*this <= other);
 }
 
+// G >= G
 bool Graph::operator>=(const Graph& other) const {
     return !(*this < other);
 }
 
+// G++/++G
 Graph& Graph::operator++() {
     for (size_t i = 0; i < matrix.size(); ++i) {
         for (size_t j = 0; j < matrix[i].size(); ++j) {
@@ -181,6 +196,7 @@ Graph Graph::operator++(int) {
     return temp;
 }
 
+// G--/--G
 Graph& Graph::operator--() {
     for (size_t i = 0; i < matrix.size(); ++i) {
         for (size_t j = 0; j < matrix[i].size(); ++j) {
@@ -195,7 +211,7 @@ Graph Graph::operator--(int) {
     --(*this);
     return temp;
 }
-
+ // G * Sc
 Graph Graph::operator*(int scalar) const {
     Graph result = *this;
     for (size_t i = 0; i < result.matrix.size(); ++i) {
@@ -206,6 +222,7 @@ Graph Graph::operator*(int scalar) const {
     return result;
 }
 
+// G *= G
 Graph& Graph::operator*=(int scalar) {
     for (size_t i = 0; i < matrix.size(); ++i) {
         for (size_t j = 0; j < matrix[i].size(); ++j) {
@@ -215,6 +232,7 @@ Graph& Graph::operator*=(int scalar) {
     return *this;
 }
 
+// G * G
 Graph Graph::operator*(const Graph& other) const {
     if (matrix.size() != other.matrix.size()) {
         throw std::invalid_argument("Graphs must be of the same size for multiplication.");
@@ -232,6 +250,7 @@ Graph Graph::operator*(const Graph& other) const {
     return result;
 }
 
+//output stream
 std::ostream& operator<<(std::ostream& os, const Graph& graph) {
     size_t size = graph.matrix.size();
     std::stringstream ss;
@@ -252,6 +271,7 @@ std::ostream& operator<<(std::ostream& os, const Graph& graph) {
     return os;
 }
 
+// G/Sc
 Graph Graph::operator/(int scalar) const {
     if (scalar == 0) {
         throw std::invalid_argument("Division by zero.");
@@ -265,6 +285,7 @@ Graph Graph::operator/(int scalar) const {
     return result;
 }
 
+//G /= Sc
 Graph& Graph::operator/=(int scalar) {
     if (scalar == 0) {
         throw std::invalid_argument("Division by zero.");
@@ -277,6 +298,7 @@ Graph& Graph::operator/=(int scalar) {
     return *this;
 }
 
+//help for operator<
 size_t Graph::countEdges() const {
     size_t edges = 0;
     for (size_t i = 0; i < matrix.size(); ++i) {
