@@ -148,6 +148,14 @@ TEST_CASE("Test graph inequality")
         {0, 0, 0}};
     g2.loadGraph(graph2);
     CHECK(g1 != g2);
+
+    ariel::Graph g3;
+    vector<vector<int>> graph3 = {
+        {0, 1, 0},
+        {1, 0, 1},
+        {0, 11, 0}};
+    g3.loadGraph(graph3);
+    CHECK(g1 != g3);
 }
 TEST_CASE("Test graph less than")
 {
@@ -313,12 +321,14 @@ TEST_CASE("Invalid operations")
         {1, 0, 1},
         {0, 1, 0}};
     g1.loadGraph(graph);
-    //ariel::Graph g2;
-    // vector<vector<int>> weightedGraph = {
-    //     {0, 1, 1, 1},
-    //     {1, 0, 2, 1},
-    //     {1, 2, 0, 1}};
-    // g2.loadGraph(weightedGraph);
+
+    ariel::Graph g2;
+    vector<vector<int>> badGraph = {
+         {0, 1, 1, 1},
+         {1, 0, 2, 1},
+         {1, 2, 0, 1}};
+    CHECK_THROWS(g2.loadGraph(badGraph));
+
      ariel::Graph g5;
     vector<vector<int>> graph2 = {
         {0, 1, 0, 0, 1},
@@ -328,9 +338,7 @@ TEST_CASE("Invalid operations")
         {1, 0, 0, 1, 0}};
     g5.loadGraph(graph2);
     CHECK_THROWS(g5 * g1);
-    //CHECK_THROWS(g1 * g2);
 
-    // Addition of two graphs with different dimensions
     ariel::Graph g6;
     vector<vector<int>> graph3 = {
         {0, 1, 0, 0, 1},
